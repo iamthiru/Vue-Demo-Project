@@ -55,6 +55,7 @@ const app = Vue.createApp({
             this.monsterHealth = 100;
             this.matchRounds = 0;
             this.winner = null;
+            this.gameLog = [];
         },
         playerAttack(){
             this.matchRounds = this.matchRounds + 1;
