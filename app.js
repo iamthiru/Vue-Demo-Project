@@ -28,6 +28,9 @@ const app = Vue.createApp({
         },
         isSpecialAttackAvailable(){
             return this.matchRounds % 3 !== 0;
+        },
+        isHealAvailable(){
+            return this.playerHealth === 100;
         }
     },
     watch : {
@@ -59,33 +62,34 @@ const app = Vue.createApp({
         },
         playerAttack(){
             this.matchRounds = this.matchRounds + 1;
-            const attackValue = getRandom(5, 12);
+            const attackValue = getRandom(5, 10);
             this.monsterHealth -= attackValue;
             this.addGameLogDetails("player", "attack", attackValue);
             this.monsterAttack();
         },
         monsterAttack(){
-            const attackValue = getRandom(8, 15);
+            const attackValue = getRandom(8, 13);
             this.playerHealth -= attackValue;
             this.addGameLogDetails("monster", "attack", attackValue);
         },
         playerSpecialAttack(){
             this.matchRounds = this.matchRounds + 1;
-            const attackValue = getRandom(10, 17);
+            const attackValue = getRandom(10, 20);
             this.monsterHealth -= attackValue;
             this.addGameLogDetails("player", "attack", attackValue);
             this.monsterAttack();
         },
         playerHealing(){
+            this.monsterAttack();
             this.matchRounds = this.matchRounds + 1;
-            const healingValue = getRandom(18, 28);
-            if( this.playerHealth + healingValue > 100 ){
+            const healingValue = getRandom(10, 20);
+            if( this.playerHealth + healingValue >= 100 ){
                 this.playerHealth = 100;
             }else{
                 this.playerHealth += healingValue;
             }
             this.addGameLogDetails("player", "heal", healingValue);
-            this.monsterAttack();
+            
             
         },
         playerSurrender(){

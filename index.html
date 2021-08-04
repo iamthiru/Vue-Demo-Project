@@ -18,13 +18,13 @@
     </header>
     <div id="game">
       <section id="monster" class="container">
-        <h2>Monster Health</h2>
+        <h2>Monster Health : {{monsterHealth}}</h2>
         <div class="healthbar">
           <div class="healthbar__value" :style="monsterHealthIndicator"></div>
         </div>
       </section>
       <section id="player" class="container">
-        <h2>Your Health</h2>
+        <h2>Your Health : {{playerHealth}}</h2>
         <div class="healthbar">
           <div class="healthbar__value" :style="playerHealthIndicator"></div>
         </div>
@@ -45,7 +45,7 @@
           SPECIAL ATTACK
         </button>
 
-        <button @click="playerHealing">HEAL</button>
+        <button @click="playerHealing" :disabled="isHealAvailable">HEAL</button>
 
         <button @click="playerSurrender">SURRENDER</button>
       </section>
