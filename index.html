@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Monster Slayer</h1>
+    </header>
+    <div id="game">
+      <section id="monster" class="container">
+        <h2>Monster Health</h2>
+        <div class="healthbar">
+          <div class="healthbar__value" :style="monsterHealthIndicator"></div>
+        </div>
+      </section>
+      <section id="player" class="container">
+        <h2>Your Health</h2>
+        <div class="healthbar">
+          <div class="healthbar__value" :style="playerHealthIndicator"></div>
+        </div>
+      </section>
+      <section id="game-over" class="container" v-if="winner">
+        <h2 v-if="winner === 'player'">You Won !</h2>
+        <h2 v-else-if="winner === 'monster'">You Lost !</h2>
+        <h2 v-else>It's draw, Better Luck next time !</h2>
+        <button @click="restartGame">Restart Game</button>
+      </section>
+      <section id="controls" v-else>
+        <button @click="playerAttack">ATTACK</button>
+
+        <button
+          @click="playerSpecialAttack"
+          :disabled="isSpecialAttackAvailable"
+        >
+          SPECIAL ATTACK
+        </button>
+
+        <button @click="playerHealing">HEAL</button>
+
+        <button @click="playerSurrender">SURRENDER</button>
+      </section>
+      <section id="log" class="container">
+        <h2>Battle Log</h2>
+        <ul>
+          <li v-for="logDetail in gameLog">
+            <span
+              :class="{'log--player': logDetail.actionBy === 'player', 'log--monster': logDetail.actionBy === 'monster'}"
+              >{{ logDetail.actionBy === 'player' ? 'Player' : 'Monster'
+              }}</span
+            >
+            <span v-if="logDetail.actionType === 'heal'">
+              heals himself for
+              <span class="log--heal">{{ logDetail.actionValue }}</span></span
+            >
+            <span v-else-if="logDetail.actionType === 'surrender'">
+              surrender to Monster
+              <span class="log--damage">{{ logDetail.actionValue }}</span></span
+            >
+            <span v-else>
+              attacks and deals
+              <span class="log--damage">{{ logDetail.actionValue }}</span>
+            </span>
+            
+
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
