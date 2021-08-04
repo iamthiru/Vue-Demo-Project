@@ -80,7 +80,7 @@ const app = Vue.createApp({
             this.monsterAttack();
         },
         playerHealing(){
-            this.monsterAttack();
+            
             this.matchRounds = this.matchRounds + 1;
             const healingValue = getRandom(10, 20);
             if( this.playerHealth + healingValue >= 100 ){
@@ -89,7 +89,7 @@ const app = Vue.createApp({
                 this.playerHealth += healingValue;
             }
             this.addGameLogDetails("player", "heal", healingValue);
-            
+            this.monsterAttack();
             
         },
         playerSurrender(){
@@ -98,6 +98,7 @@ const app = Vue.createApp({
         },
         addGameLogDetails( who, what, value ) {
             this.gameLog.unshift({
+                round : this.matchRounds,
                 actionBy : who,
                 actionType : what,
                 actionValue : value,
