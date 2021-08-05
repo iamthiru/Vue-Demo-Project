@@ -40,7 +40,7 @@
         <h2 v-else-if="winner === 'monster'">You Lost !</h2>
         <h2 v-else>It's draw, Better Luck next time !</h2>
         <button @click="restartGame">
-          Restart    <i class="fas fa-sync-alt"></i>    Game
+          Restart <i class="fas fa-sync-alt"></i> Game
         </button>
       </section>
       <section id="controls" v-else>
@@ -59,7 +59,7 @@
 
         <button @click="playerSurrender">SURRENDER 🤕</button>
       </section>
-      
+
       <section id="log" class="container">
         <h2>Battle Log</h2>
         <!-- Log Details in List -->
@@ -121,7 +121,11 @@
                   <span class="log--damage">{{ logDetail.actionValue }}</span>
                 </span>
                 <span v-else>
-                  <span class="log--damage">{{ logDetail.actionValue }}</span>
+                  <span
+                   
+                    :class="{'log--player': logDetail.actionBy === 'player', 'log--monster': logDetail.actionBy === 'monster'}"
+                    >{{ logDetail.actionValue }}</span
+                  >
                 </span>
               </td>
             </tr>
