@@ -101,6 +101,7 @@ const app = Vue.createApp({
             
         },
         playerSurrender(){
+            this.matchRounds += 1;
             this.winner = "monster";
             this.addGameLogDetails("player", "surrender", 0);
         },

@@ -119,3 +119,22 @@ button:disabled {
 .log--heal {
   color: green;
 }
+.table-container {
+  overflow-x: auto;
+}
+table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: auto;
+  caption-side: top;
+  empty-cells: hide;
+  table-layout: auto;
+}
+th,
+td {
+  padding: 15px;
+  text-align: center;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}

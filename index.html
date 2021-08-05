@@ -8,6 +8,12 @@
       href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+      integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://unpkg.com/vue@next" defer></script>
     <script src="app.js" defer></script>
@@ -33,27 +39,33 @@
         <h2 v-if="winner === 'player'">You Won !</h2>
         <h2 v-else-if="winner === 'monster'">You Lost !</h2>
         <h2 v-else>It's draw, Better Luck next time !</h2>
-        <button @click="restartGame">Restart Game</button>
+        <button @click="restartGame">
+          Restart    <i class="fas fa-sync-alt"></i>    Game
+        </button>
       </section>
       <section id="controls" v-else>
-        <button @click="playerAttack">ATTACK</button>
+        <button @click="playerAttack">ATTACK 👊</button>
 
         <button
           @click="playerSpecialAttack"
           :disabled="isSpecialAttackAvailable"
         >
-          SPECIAL ATTACK
+          SPECIAL ATTACK 👊👊
         </button>
 
-        <button @click="playerHealing" :disabled="isHealAvailable">HEAL</button>
+        <button @click="playerHealing" :disabled="isHealAvailable">
+          HEAL 🥤
+        </button>
 
-        <button @click="playerSurrender">SURRENDER</button>
+        <button @click="playerSurrender">SURRENDER 🤕</button>
       </section>
+      
       <section id="log" class="container">
         <h2>Battle Log</h2>
-        <ul>
+        <!-- Log Details in List -->
+        <!-- <ul>
           <li v-for="logDetail in gameLog">
-            <span>Round : {{logDetail.round +"  ->  "}}</span>
+            <span>Round : {{logDetail.round +" -> "}}</span>
             <span
               :class="{'log--player': logDetail.actionBy === 'player', 'log--monster': logDetail.actionBy === 'monster'}"
               >{{ logDetail.actionBy === 'player' ? 'Player' : 'Monster'
@@ -71,11 +83,50 @@
               attacks and deals
               <span class="log--damage">{{ logDetail.actionValue }}</span>
             </span>
-            <hr>
-            
-
+            <hr />
           </li>
-        </ul>
+          </ul> -->
+
+        <div class="table-container" v-if="gameLog.length > 0">
+          <table>
+            <tr>
+              <th>Round</th>
+              <th>Action By</th>
+              <th>Action Type</th>
+              <th>Action Value</th>
+            </tr>
+            <tr v-for="logDetail in gameLog">
+              <td>{{logDetail.round}}</td>
+              <td>
+                <span
+                  :class="{'log--player': logDetail.actionBy === 'player', 'log--monster': logDetail.actionBy === 'monster'}"
+                  >{{ logDetail.actionBy === 'player' ? 'Player' : 'Monster'
+                  }}</span
+                >
+              </td>
+              <td>
+                <span v-if="logDetail.actionType === 'heal'">
+                  Heals himself for
+                </span>
+                <span v-else-if="logDetail.actionType === 'surrender'">
+                  surrender to Monster
+                </span>
+                <span v-else> Attacks and deals </span>
+              </td>
+              <td>
+                <span v-if="logDetail.actionType === 'heal'">
+                  <span class="log--heal">{{ logDetail.actionValue }}</span>
+                </span>
+                <span v-else-if="logDetail.actionType === 'surrender'">
+                  <span class="log--damage">{{ logDetail.actionValue }}</span>
+                </span>
+                <span v-else>
+                  <span class="log--damage">{{ logDetail.actionValue }}</span>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
       </section>
     </div>
   </body>
